@@ -5,7 +5,7 @@ import {
   RetrieveBody,
   SuspendBody,
   TeacherController,
-} from "../interfaces/types";
+} from "../types/types";
 import { asyncHandler } from "../middlewares";
 import TeacherService from "../services/teacherService";
 

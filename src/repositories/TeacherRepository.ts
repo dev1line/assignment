@@ -1,9 +1,9 @@
 import { ModelStatic, Op, Transaction } from "sequelize";
 import {
-  NotificationRecipientProjection,
+  StudentMembershipProjection,
   TeacherRepositoryContract,
   TeacherStudentsProjection,
-} from "../interfaces/types";
+} from "../types/types";
 import Student from "../models/Student";
 import Teacher from "../models/Teacher";
 import BaseRepository from "./BaseRepository";
@@ -43,7 +43,7 @@ export default class TeacherRepository
 
   async findByEmailWithStudents(
     email: string,
-  ): Promise<NotificationRecipientProjection[] | null> {
+  ): Promise<StudentMembershipProjection[] | null> {
     const teacher = await this.findOne({
       where: { email },
       include: [

@@ -1,5 +1,5 @@
 import { ModelStatic, Op, Transaction } from "sequelize";
-import { StudentRepositoryContract } from "../interfaces/types";
+import { StudentRepositoryContract } from "../types/types";
 import Student from "../models/Student";
 import BaseRepository from "./BaseRepository";
 

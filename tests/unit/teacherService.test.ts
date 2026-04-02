@@ -3,15 +3,16 @@ import {
   StudentRepositoryContract,
   TeacherRepositoryContract,
   TeacherServiceDeps,
-} from "../../src/interfaces/types";
+} from "../../src/types/types";
 import TeacherService from "../../src/services/teacherService";
+import { extractMentionedEmails } from "../../src/utils/extractMentionedEmails";
 import { Sequelize, Transaction } from "sequelize";
 
-describe("TeacherService.extractMentionedEmails", () => {
+describe("extractMentionedEmails", () => {
   it("should extract emails mentioned with @ in notification", () => {
     const notification =
       "Hello students! @studentagnes@gmail.com @studentmiche@gmail.com";
-    const result = TeacherService.extractMentionedEmails(notification);
+    const result = extractMentionedEmails(notification);
     expect(result).toEqual([
       "studentagnes@gmail.com",
       "studentmiche@gmail.com",

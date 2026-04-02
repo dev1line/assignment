@@ -33,7 +33,8 @@ export interface TeacherStudentsProjection {
   students: string[];
 }
 
-export interface NotificationRecipientProjection {
+/** Student row (email + suspension) as loaded for a teacher; persistence shape, not the notification use case. */
+export interface StudentMembershipProjection {
   email: string;
   isSuspended: boolean;
 }
@@ -56,7 +57,7 @@ export interface TeacherRepositoryContract {
   ): Promise<void>;
   findByEmailWithStudents(
     email: string,
-  ): Promise<NotificationRecipientProjection[] | null>;
+  ): Promise<StudentMembershipProjection[] | null>;
   findAllByEmailsWithStudents(
     emails: string[],
   ): Promise<TeacherStudentsProjection[]>;

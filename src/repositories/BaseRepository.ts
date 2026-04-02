@@ -4,7 +4,7 @@ import {
   Model,
   ModelStatic,
 } from "sequelize";
-import { BaseRepositoryContract } from "../interfaces/types";
+import { BaseRepositoryContract } from "../types/types";
 
 export default class BaseRepository<
   TModel extends Model,

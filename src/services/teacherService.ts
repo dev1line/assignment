@@ -1,11 +1,12 @@
 import { NotFoundError } from "../errors";
 import {
-  NotificationRecipientProjection,
+  StudentMembershipProjection,
+  StudentRepositoryContract,
   TeacherRepositoryContract,
   TeacherServiceDeps,
   TeacherStudentsProjection,
-  StudentRepositoryContract,
-} from "../interfaces/types";
+} from "../types/types";
+import { extractMentionedEmails } from "../utils/extractMentionedEmails";
 
 export default class TeacherService {
   private teacherRepository: TeacherRepositoryContract;
@@ -80,13 +81,13 @@ export default class TeacherService {
     teacherEmail: string,
     notification: string,
   ): Promise<string[]> {
-    const teacherStudents: NotificationRecipientProjection[] | null =
+    const teacherStudents: StudentMembershipProjection[] | null =
       await this.teacherRepository.findByEmailWithStudents(teacherEmail);
     if (!teacherStudents) {
       throw new NotFoundError("Teacher", teacherEmail);
     }
 
-    const mentionedEmails = TeacherService.extractMentionedEmails(notification);
+    const mentionedEmails = extractMentionedEmails(notification);
     const registeredEmails = teacherStudents
       .filter((student) => !student.isSuspended)
       .map((student) => student.email);
@@ -99,16 +100,5 @@ export default class TeacherService {
     }
 
     return [...new Set([...registeredEmails, ...mentionedStudentEmails])];
-  }
-
-  static extractMentionedEmails(notification: string): string[] {
-    const emailRegex =
-      /(?:^|\s)@([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g;
-    const emails: string[] = [];
-    let match: RegExpExecArray | null;
-    while ((match = emailRegex.exec(notification)) !== null) {
-      emails.push(match[1].toLowerCase());
-    }
-    return emails;
   }
 }

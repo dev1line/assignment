@@ -1,0 +1,21 @@
+{
+  "name": "teacher-student-cdk",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "cdk": "cdk",
+    "synth": "cdk synth"
+  },
+  "devDependencies": {
+    "@types/node": "22.19.15",
+    "aws-cdk": "2.1116.0",
+    "ts-node": "10.9.2",
+    "typescript": "5.9.3"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "2.247.0",
+    "constructs": "10.6.0"
+  }
+}

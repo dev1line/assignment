@@ -8,3 +8,6 @@ coverage
 .env.test
 README.md
 requirements.md
+infra/cdk/cdk.out
+docs
+*.md

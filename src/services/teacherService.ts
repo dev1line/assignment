@@ -50,12 +50,13 @@ export default class TeacherService {
     const emails = Array.isArray(teacherEmails)
       ? teacherEmails
       : [teacherEmails];
+    const uniqueEmails = [...new Set(emails)];
     const teachers: TeacherStudentsProjection[] =
-      await this.teacherRepository.findAllByEmailsWithStudents(emails);
+      await this.teacherRepository.findAllByEmailsWithStudents(uniqueEmails);
 
-    if (teachers.length !== emails.length) {
+    if (teachers.length !== uniqueEmails.length) {
       const foundEmails = teachers.map((t) => t.email);
-      const missing = emails.filter((e) => !foundEmails.includes(e));
+      const missing = uniqueEmails.filter((e) => !foundEmails.includes(e));
       throw new NotFoundError("Teacher(s)", missing.join(", "));
     }
 

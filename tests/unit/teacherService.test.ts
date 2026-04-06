@@ -72,4 +72,18 @@ describe("TeacherService (with mocked repositories)", () => {
       service.getCommonStudents("missing@gmail.com"),
     ).rejects.toThrow(NotFoundError);
   });
+
+  it("should not treat duplicate teacher emails as missing", async () => {
+    mockTeacherRepo.findAllByEmailsWithStudents.mockResolvedValue([
+      { email: "a@gmail.com", students: ["s1@gmail.com", "s2@gmail.com"] },
+    ]);
+    const result = await service.getCommonStudents([
+      "a@gmail.com",
+      "a@gmail.com",
+    ]);
+    expect(result).toEqual(["s1@gmail.com", "s2@gmail.com"]);
+    expect(mockTeacherRepo.findAllByEmailsWithStudents).toHaveBeenCalledWith([
+      "a@gmail.com",
+    ]);
+  });
 });
